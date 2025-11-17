@@ -1,75 +1,39 @@
-# React + TypeScript + Vite
+# Argyle & Ditmas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite project powering the Argyle & Ditmas site.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js **20.19.0+** (LTS) or **22.12.0+**. These are the first Node releases that include the `crypto.hash` API Vite 7 uses internally. Older versions (for example Node 20.5.0) crash during `npm run dev`.
+- npm 10+ (ships with the Node installers above).
 
-## React Compiler
+> A `.nvmrc` file is committed, so `nvm use` automatically switches to the supported Node release.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Getting started
 
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+nvm use              # switches to 20.19.0 (or tells you to install it)
+npm install
+npm run dev          # starts Vite on http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+If `nvm use` reports that Node 20.19.0 is missing, run `nvm install` once and rerun `nvm use`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `npm run dev` – Start the Vite dev server
+- `npm run build` – Type-check and build to `dist/`
+- `npm run preview` – Preview the production build locally
+- `npm run storybook` – Launch Storybook on port 6006
+- `npm run build-storybook` – Build the static Storybook bundle
+- `npm run lint` – Run ESLint
+
+## Troubleshooting
+
+**Node version error / `crypto.hash is not a function`**
+
+1. Check the runtime with `node -v`. It must report `v20.19.0` (or higher in the 20.x line) or `v22.12.0+`.
+2. Run `nvm use` (or `nvm install && nvm use`) in the project root to switch Node versions.
+3. If you are not using `nvm`, install the latest Node 20 LTS from [nodejs.org](https://nodejs.org/) and restart your shell before running `npm run dev` again.
+
+Once the runtime matches those versions, `npm run dev` and Storybook will boot without the `crypto.hash` error.
